@@ -35,7 +35,11 @@ public class LibraryProgram {
             int menuCommand = input.nextInt();
 
             switch (menuCommand) {
-                case 1 -> showAvailableBooks(inventory, bookCounter);
+                case 1 -> {
+                    showAvailableBooks(inventory, bookCounter);
+                    checkedOutBook(inventory, bookCounter);
+
+                }
 
                 case 2 -> System.out.println("""
                                                  Show checked out books with the name of the person who checked out
@@ -116,7 +120,6 @@ public class LibraryProgram {
 
     }
 
-
     public static void showAvailableBooks(Book[] inventory, int bookCounter){
         for (int i = 0; i < bookCounter; i++) {
             if (!inventory[i].getIsCheckedOut()) {
@@ -126,6 +129,51 @@ public class LibraryProgram {
 
             }
         }
+    }
+
+    public static void checkedOutBook(Book[] inventory, int bookCounter){
+        System.out.print("""
+                   *---------------------------------*
+                   * What would you like to do?      *
+                   * 1 - Select book by ID           *
+                   * 2 - Exit                        *
+                   *---------------------------------*
+                   \s""");
+        System.out.print("Choose your option: ");
+        int menuCommand2 = input.nextInt();
+        if (menuCommand2 == 1) {
+            System.out.println("Select book by ID: ");
+            int command = input.nextInt();
+            input.nextLine();
+            if (command > 20 || command < 1) {
+                System.out.println("Invalid option :( Type in, the correct ID (Between 1 and 20 only)");
+                System.out.println("Select book by ID: ");
+                command = input.nextInt();
+            } else {
+
+                for (int i = 0; i < bookCounter; i++) {
+                    if (inventory[i].getId() == command) {
+                        System.out.print("Found it! Enter your name: ");
+                        inventory[i].checkOut(input.nextLine());
+                        System.out.println("Your book " + inventory[i].getTitle() + " is checked out.");
+
+                    }
+                }
+            }
+        } else if (menuCommand2 == 2) {
+            System.out.println("Going back to main menu");
+
+        } else {
+            System.out.println("It looks like someone typed an invalid option... Please select 1 or 2");
+        }
+
+
+
+
+
+
+
+
     }
 
 
