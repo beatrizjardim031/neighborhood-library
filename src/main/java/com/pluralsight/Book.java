@@ -9,12 +9,12 @@ public class Book {
     private String checkedOutTo;
 
     // constructor
-    public Book(String isbn, int id, String title, boolean isCheckedOut, String checkedOutTo) {
-        this.isbn = isbn;
+    public Book(int id, String isbn, String title) {
         this.id = id;
+        this.isbn = isbn;
         this.title = title;
-        this.isCheckedOut = isCheckedOut;
-        this.checkedOutTo = checkedOutTo;
+        this.isCheckedOut = false;
+        this.checkedOutTo = "";
     }
     // parameterless constructor
     public Book() {
@@ -46,11 +46,11 @@ public class Book {
         this.title = title;
     }
 
-    public boolean isCheckedOut() {
+    public boolean getIsCheckedOut() {
         return isCheckedOut;
     }
 
-    public void setCheckedOut(boolean checkedOut) {
+    public void setIsCheckedOut(boolean checkedOut) {
         isCheckedOut = checkedOut;
     }
 
@@ -62,7 +62,14 @@ public class Book {
         this.checkedOutTo = checkedOutTo;
     }
 
-
-
+//  methods
+    public void checkOut(String name) {
+        isCheckedOut = true;
+        checkedOutTo = name;
+    }
+    public void checkIn(){
+        isCheckedOut = false;
+        checkedOutTo = "";
+    }
 
 }
