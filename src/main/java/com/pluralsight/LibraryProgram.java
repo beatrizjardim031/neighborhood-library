@@ -34,7 +34,7 @@ public class LibraryProgram {
             int menuCommand = input.nextInt();
             input.nextLine();
 
-        // switch case for checking menus
+        // switch case for checking choices
             switch (menuCommand) {
                 case 1 -> {
                     showAvailableBooks(inventory, bookCounter);
