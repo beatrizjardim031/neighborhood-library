@@ -1,26 +1,25 @@
 package com.pluralsight;
 
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class LibraryProgram {
     static Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
+        // variables
         Book[] inventory = new Book[20];
         int bookCounter = 20;
-        loadInventory(inventory, bookCounter);
+        loadInventory(inventory);
         String checkedOutTo = "";
         boolean isCheckedOut = false;
-
         boolean isRunning = true;
 
-
+        // welcome print message
         System.out.print("""
                               *---------------------------------*
                               * Welcome to the Goblin's Library *
                               """);
-
+        // main menu
         while (isRunning) {
             System.out.print("""
                    *---------------------------------*
@@ -33,44 +32,23 @@ public class LibraryProgram {
                    \s""");
             System.out.print("Choose your option: ");
             int menuCommand = input.nextInt();
+            input.nextLine();
 
+        // switch case for checking menus
             switch (menuCommand) {
                 case 1 -> {
                     showAvailableBooks(inventory, bookCounter);
                     checkedOutBook(inventory, bookCounter);
-
                 }
-
-                case 2 -> System.out.println("""
-                                                 Show checked out books with the name of the person who checked out
-                                                 prompt for:
-                                                 1 - Check in a book (ask for book ID and check in the book and go back to main menu after book is checked out)
-                                                 2 - Go back to main menu""");
+                case 2 -> checkedInBook(inventory, bookCounter);
                 case 3 -> isRunning = false;
-
-
-
-
-
             }
-
-        }
+        }// "goodbye" message
         System.out.println("✨Thank you for using the Goblin's Library✨");
 
-
-        // display menu
-        //get and process users choice
-
-
-
-
-
-
     }
-
-
-
-    public static Book[] loadInventory(Book[] inventory, int bookCounter) {
+    // methods to load inventory, show available books, show checked out and show checked in books and ID validation
+    public static void loadInventory(Book[] inventory) {
 
         Book book1 = new Book (1, "978-1-50-116193-3", "The Seven Husbands of Evelyn Hugo");
         Book book2 = new Book (2, "978-1-25-030146-5", "Red, White & Royal Blue");
@@ -114,14 +92,11 @@ public class LibraryProgram {
         inventory[18] = book19;
         inventory[19] = book20;
 
-
-        return inventory;
-
-
     }
 
     public static void showAvailableBooks(Book[] inventory, int bookCounter){
         for (int i = 0; i < bookCounter; i++) {
+
             if (!inventory[i].getIsCheckedOut()) {
                 System.out.printf("----------------------------------------------------------------------%n");
                 System.out.printf("|%-2d| %-20s | %-40s |%n", inventory[i].getId(), inventory[i].getIsbn(), inventory[i].getTitle());
@@ -141,22 +116,25 @@ public class LibraryProgram {
                    \s""");
         System.out.print("Choose your option: ");
         int menuCommand2 = input.nextInt();
+
         if (menuCommand2 == 1) {
-            System.out.println("Select book by ID: ");
+            System.out.print("Select book by ID: ");
             int command = input.nextInt();
             input.nextLine();
+
             if (command > 20 || command < 1) {
                 System.out.println("Invalid option :( Type in, the correct ID (Between 1 and 20 only)");
                 System.out.println("Select book by ID: ");
                 command = input.nextInt();
-            } else {
+                input.nextLine();
 
+            } else {
                 for (int i = 0; i < bookCounter; i++) {
+
                     if (inventory[i].getId() == command) {
                         System.out.print("Found it! Enter your name: ");
                         inventory[i].checkOut(input.nextLine());
                         System.out.println("Your book " + inventory[i].getTitle() + " is checked out.");
-
                     }
                 }
             }
@@ -164,17 +142,53 @@ public class LibraryProgram {
             System.out.println("Going back to main menu");
 
         } else {
-            System.out.println("It looks like someone typed an invalid option... Please select 1 or 2");
+            System.out.println("It looks like someone typed an invalid option... Please try again");
         }
-
-
-
-
-
-
-
-
     }
 
+    public static void checkedInBook(Book[] inventory, int bookCounter) {
+        for (int i = 0; i < bookCounter; i++) {
+
+            if (inventory[i].getIsCheckedOut()) {
+                System.out.printf("---------------------------------------------------------------------------------------------%n");
+                System.out.printf("|%-2d| %-20s | %-40s | %-20s | %n", inventory[i].getId(), inventory[i].getIsbn(), inventory[i].getTitle(), inventory[i].getCheckedOutTo());
+            }
+        }
+        System.out.print("""
+                   *---------------------------------*
+                   * What would you like to do?      *
+                   * C - Check-In a book           *
+                   * X - Exit                        *
+                   *---------------------------------*
+                   \s""");
+
+        System.out.print("Choose your option: ");
+        String menuCommand3 = input.nextLine();
+
+        if(menuCommand3.equalsIgnoreCase("C")) {
+
+            System.out.print("Type in book ID: ");
+            int bookID = input.nextInt();
+
+            if (bookID > 20 || bookID < 1) {
+                System.out.println("Invalid ID, verify it and try again.");
+
+            } else {
+                for (int i = 0; i < bookCounter; i++) {
+
+                    if (inventory[i].getId() == bookID && inventory[i].getIsCheckedOut()) {
+                        System.out.println("The book " + inventory[i].getTitle() + " is back!");
+                        inventory[i].checkIn();
+
+                    }
+                }
+            }
+        } else {
+            System.out.println("Going back to main menu...");
+
+        }
+    }
+
+    // create a method that will show my submenu, read the users choice and if invalid show it again return the valid choice
 
 }
