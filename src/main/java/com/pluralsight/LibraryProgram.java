@@ -5,14 +5,14 @@ import java.util.Scanner;
 public class LibraryProgram {
     static Scanner input = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { // main method
         // variables
-        Book[] inventory = new Book[20];
+        Book[] inventory = new Book[20]; //empty array
         int bookCounter = 20;
         loadInventory(inventory);
         String checkedOutTo = "";
         boolean isCheckedOut = false;
-        boolean isRunning = true;
+        boolean isRunning = true; //controls main menu loop
 
         // welcome print message
         System.out.print("""
@@ -92,7 +92,7 @@ public class LibraryProgram {
         inventory[18] = book19;
         inventory[19] = book20;
 
-    }
+    } // void because arrays are modified in memory
 
     public static void showAvailableBooks(Book[] inventory, int bookCounter){
         for (int i = 0; i < bookCounter; i++) {
@@ -153,7 +153,7 @@ public class LibraryProgram {
                 System.out.printf("---------------------------------------------------------------------------------------------%n");
                 System.out.printf("|%-2d| %-20s | %-40s | %-20s | %n", inventory[i].getId(), inventory[i].getIsbn(), inventory[i].getTitle(), inventory[i].getCheckedOutTo());
             }
-        }
+        }// |%-2d| %-20s | %-40s | %-20s | %n are the columns width
         System.out.print("""
                    *---------------------------------*
                    * What would you like to do?      *

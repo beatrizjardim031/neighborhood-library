@@ -16,9 +16,6 @@ public class Book {
         this.isCheckedOut = false;
         this.checkedOutTo = "";
     }
-    // parameterless constructor
-    public Book() {
-    }
 
 
     // getters and setters
